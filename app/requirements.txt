@@ -8,5 +8,4 @@ python-magic==0.4.27
 
 openai==0.28.0
 protobuf~=3.19.0
-tiktoken==0.1.1
-
+tiktoken==0.4.0
