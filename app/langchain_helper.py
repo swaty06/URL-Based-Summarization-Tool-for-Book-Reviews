@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Aug  5 17:53:33 2024
 
-@author: rampr
-"""
 
 from langchain.vectorstores import FAISS
 from langchain.llms import GooglePalm
