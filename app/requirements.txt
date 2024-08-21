@@ -7,5 +7,6 @@ faiss-cpu==1.7.4
 libmagic==1.0
 python-magic==0.4.27
 
-OpenAI == 0.28.0
+openai==0.28.0
 protobuf~=3.19.0
+tiktoken==0.4.0
