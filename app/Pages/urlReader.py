@@ -30,7 +30,7 @@ st.title("Book Search Tool 📚")
 st.sidebar.title("Input Article URLs")
 
 # Apply the background image
-apply_background(image_path="./media/book4.jpg")
+apply_background(image_path="./app/media/book4.jpg")
 
 # Custom CSS for smaller URL input fields in the sidebar
 st.sidebar.markdown(
