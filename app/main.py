@@ -11,7 +11,7 @@ st.set_page_config(
 )
 
 # Apply the background image
-apply_background(image_path="./media/book4.jpg")
+apply_background(image_path="./app/media/book4.jpg")
 
 # Title and introductory message
 st.title("Book Info Hub 📚")
