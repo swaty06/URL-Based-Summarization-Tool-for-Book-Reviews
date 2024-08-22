@@ -43,13 +43,12 @@ else:
     if page_module:
         page_module.app()  # Call the app function from the module
 
-# Main content in the sidebar
-st.sidebar.subheader("Tools Available")
-st.sidebar.write("""
+# Main content (previously in the sidebar)
+st.subheader("Tools Available")
+st.write("""
 1. **URL Summarization:** Provide a URL related to any book or literary content, and our tool will summarize the key points for you.
 2. **Book Chatbot:** Ask any book-related questions, and get insightful responses from our AI-powered assistant.
 """)
-
 # Add links to book resources or related pages
 st.markdown("""
 For more information and about the project, check out my profile:
@@ -68,7 +67,7 @@ st.markdown(
 
 show_pages(
     [
-        Page(str(root_path.joinpath("Main.py")), "Home", "🏠"),
+        Page(str(root_path.joinpath("main.py")), "Home", "🏠"),
         Page(str(pages_path.joinpath("page1.py")), "EDA", ":books:"),
         Page(str(pages_path.joinpath("page2.py")), "Crop Selection", "🌿"),
        
