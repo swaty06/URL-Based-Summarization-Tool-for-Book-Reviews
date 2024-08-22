@@ -65,7 +65,7 @@ def app():
     main_placeholder = st.empty()
     
     # Initialize OpenAI LLM with specific parameters
-    llm = OpenAI(temperature=temperature, max_tokens=max_tokens)
+    llm = OpenAI(temperature=0.9, max_tokens=max_tokens)
     
     # Processing logic for URLs
     if process_url_clicked:
