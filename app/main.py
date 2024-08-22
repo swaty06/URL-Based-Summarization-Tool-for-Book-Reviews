@@ -1,6 +1,6 @@
 import streamlit as st
 from utils import apply_background  # Import the function from utils.py
-from .Pages import page1, page2  # Correctly import the pages
+ # Correctly import the pages
 
 # Set the page configuration
 st.set_page_config(
