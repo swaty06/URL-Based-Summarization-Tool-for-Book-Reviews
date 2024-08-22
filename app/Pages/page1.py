@@ -120,6 +120,6 @@ def app():
                     sources_list = sources.split("\n")
                     for source in sources_list:
                         st.write(source)
-utils.custom_navbar()
+custom_navbar()
 app()
 add_page_title(layout="wide")
