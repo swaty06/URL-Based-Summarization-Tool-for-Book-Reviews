@@ -21,7 +21,7 @@ def load_page(page_name):
         module = importlib.import_module(module_name)
         return module
     except ModuleNotFoundError:
-        st.error(f"Page {page_name} not found.")
+        st.error(f" {page_name} not found.")
         return None
 
 # Display the selected page with content
