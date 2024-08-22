@@ -64,7 +64,7 @@ def app():
     file_path = "vector_index.pkl"
 
     # Initialize the vectorstore variable
-    vectorstore_openai = None
+    #vectorstore_openai = None
     
     # Placeholder for displaying status messages
     main_placeholder = st.empty()
