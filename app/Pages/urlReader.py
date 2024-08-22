@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jul 30 17:37:50 2024
-
-@author: rampr
-"""
-
 import os
 import streamlit as st
 import pickle
@@ -16,21 +9,20 @@ from langchain.document_loaders import UnstructuredURLLoader
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from utils import apply_background 
-
 from dotenv import load_dotenv
 
 # Load environment variables from .env file, particularly the OpenAI API key
 load_dotenv()
 
-
 # Streamlit app setup
 st.title("Book Search Tool 📚")
 
-# Add a sidebar for URL input and button
-st.sidebar.title("Input Article URLs")
-
 # Apply the background image
 apply_background(image_path="./app/media/book4.jpg")
+
+# Sidebar content
+st.sidebar.title("Book Search Tool 📚")
+st.sidebar.write("Enter up to three URLs related to a book or article. Process the URLs to ask questions about the content.")
 
 # Custom CSS for smaller URL input fields in the sidebar
 st.sidebar.markdown(
@@ -51,6 +43,13 @@ urls = [
     for i in range(3)
 ]
 
+# Allow user to set model parameters
+temperature = st.sidebar.slider("Model Temperature", min_value=0.0, max_value=1.0, value=0.7)
+max_tokens = st.sidebar.slider("Max Tokens", min_value=100, max_value=1000, value=500)
+
+# Allow user to set chunk size for text splitting
+chunk_size = st.sidebar.slider("Chunk Size for Text Splitting", min_value=500, max_value=2000, value=1000)
+
 # Move the Process URLs button to the sidebar
 process_url_clicked = st.sidebar.button("Process URLs")
 
@@ -61,7 +60,7 @@ file_path = "vector_index.pkl"
 main_placeholder = st.empty()
 
 # Initialize OpenAI LLM with specific parameters
-llm = OpenAI(temperature=0.9, max_tokens=500)
+llm = OpenAI(temperature=temperature, max_tokens=max_tokens)
 
 # Processing logic for URLs
 if process_url_clicked:
@@ -72,7 +71,7 @@ if process_url_clicked:
     # split data
     text_splitter = RecursiveCharacterTextSplitter(
         separators=['\n\n', '\n', '.', ','],
-        chunk_size=1000
+        chunk_size=chunk_size
     )
     main_placeholder.text("Text Splitter...Started...✅✅✅")
     docs = text_splitter.split_documents(data)
@@ -84,10 +83,14 @@ if process_url_clicked:
 
     # Save the FAISS index to a pickle file
     with open(file_path, "wb") as f:
-        #pickle.dump(vectorstore_openai, f)
         vectorstore_openai.save_local("vectorstore")
 
-   
+# Show a summary of processed URLs
+if vectorstore_openai:
+    st.sidebar.subheader("Processed URLs Summary")
+    for url in urls:
+        if url:
+            st.sidebar.write(f"Processed: {url}")
 
 # Text input for user query on the main page
 st.header("Ask a Question Related to the Links Provided")
@@ -95,22 +98,18 @@ query = st.text_input("Enter your question: ")
 
 # Handling the query input and processing
 if query:
-    if query:
-        if os.path.exists(file_path):
-            with open(file_path, "rb") as f:
-                #vectorstore = pickle.load(f)
-                vectorstore = FAISS.load_local("vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
-                chain = RetrievalQAWithSourcesChain.from_llm(llm=llm, retriever=vectorstore.as_retriever())
-                result = chain({"question": query}, return_only_outputs=True)
-                # result will be a dictionary of this format --> {"answer": "", "sources": [] }
-                st.header("Answer")
-                st.write(result["answer"])
+    if os.path.exists(file_path):
+        with open(file_path, "rb") as f:
+            vectorstore = FAISS.load_local("vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
+            chain = RetrievalQAWithSourcesChain.from_llm(llm=llm, retriever=vectorstore.as_retriever())
+            result = chain({"question": query}, return_only_outputs=True)
+            st.header("Answer")
+            st.write(result["answer"])
 
-                # Display sources, if available
-                sources = result.get("sources", "")
-                if sources:
-                    st.subheader("Sources:")
-                    sources_list = sources.split("\n")  # Split the sources by newline
-                    for source in sources_list:
-                        st.write(source)
-
+            # Display sources, if available
+            sources = result.get("sources", "")
+            if sources:
+                st.subheader("Sources:")
+                sources_list = sources.split("\n")
+                for source in sources_list:
+                    st.write(source)
