@@ -8,9 +8,13 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import UnstructuredURLLoader
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
-from utils import apply_background 
+from utils import apply_background,utils
 from dotenv import load_dotenv
 from st_pages import add_page_title
+from pathlib import Path
+
+root_path = Path(__file__).parent.parent
+media_path = root_path.joinpath("media")
 
 def app():
 
@@ -118,3 +122,4 @@ def app():
                         st.write(source)
 utils.custom_navbar()
 app()
+add_page_title(layout="wide")

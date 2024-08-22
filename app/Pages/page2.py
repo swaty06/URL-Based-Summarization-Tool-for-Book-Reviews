@@ -3,7 +3,12 @@
 
 import streamlit as st
 from langchain_helper import get_qa_chain, create_vector_db
-from utils import apply_background
+from utils import apply_background,utils
+from st_pages import add_page_title
+from pathlib import Path
+
+root_path = Path(__file__).parent.parent
+media_path = root_path.joinpath("media")
 
 def app():
 
@@ -67,6 +72,11 @@ def app():
             # Display the answer
             st.header("Answer")
             st.write(response["result"])
+
+utils.set_custom_bg()
+utils.custom_navbar()
+utils.apply_background()
+add_page_title(layout="wide")
 app()
 
 
