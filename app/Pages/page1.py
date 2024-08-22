@@ -117,3 +117,4 @@ def app():
                     for source in sources_list:
                         st.write(source)
     utils.custom_navbar()
+    app()
