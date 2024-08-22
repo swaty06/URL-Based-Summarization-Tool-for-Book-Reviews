@@ -70,21 +70,21 @@ def app():
     # Processing logic for URLs
     if process_url_clicked:
          # load data
-    loader = UnstructuredURLLoader(urls=urls)
-    main_placeholder.text("Data Loading...Started...✅✅✅")
-    data = loader.load()
-    # split data
-    text_splitter = RecursiveCharacterTextSplitter(
-        separators=['\n\n', '\n', '.', ','],
-        chunk_size=1000
-    )
-    main_placeholder.text("Text Splitter...Started...✅✅✅")
-    docs = text_splitter.split_documents(data)
-    # create embeddings and save it to FAISS index
-    embeddings = OpenAIEmbeddings()
-    vectorstore_openai = FAISS.from_documents(docs, embeddings)
-    main_placeholder.text("Embedding Vector Started Building...✅✅✅")
-    time.sleep(2)
+        loader = UnstructuredURLLoader(urls=urls)
+        main_placeholder.text("Data Loading...Started...✅✅✅")
+        data = loader.load()
+        # split data
+        text_splitter = RecursiveCharacterTextSplitter(
+            separators=['\n\n', '\n', '.', ','],
+            chunk_size=1000
+        )
+        main_placeholder.text("Text Splitter...Started...✅✅✅")
+        docs = text_splitter.split_documents(data)
+        # create embeddings and save it to FAISS index
+        embeddings = OpenAIEmbeddings()
+        vectorstore_openai = FAISS.from_documents(docs, embeddings)
+        main_placeholder.text("Embedding Vector Started Building...✅✅✅")
+        time.sleep(2)
 
     # Save the FAISS index to a pickle file
     with open(file_path, "wb") as f:
