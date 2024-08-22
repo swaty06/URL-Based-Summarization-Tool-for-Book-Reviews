@@ -34,3 +34,16 @@ def apply_background(image_path="./media/book1.jpg"):
     
     # Inject the CSS into the Streamlit app
     st.markdown(background_image_css, unsafe_allow_html=True)
+    # Customizing the navigation bar
+def custom_navbar():
+    st.markdown(
+    """
+    <style>
+    [data-testid="stSidebar"] {
+        background-color: #fdf2df;
+    </style>
+    """,
+    unsafe_allow_html=True,
+    )
+
+
