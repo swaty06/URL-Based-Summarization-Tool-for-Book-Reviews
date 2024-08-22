@@ -68,7 +68,7 @@ def app():
             st.header("Answer")
             st.write(response["result"])
 
-app()
+
             
         
         
