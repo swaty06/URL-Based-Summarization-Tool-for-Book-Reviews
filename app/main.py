@@ -18,6 +18,10 @@ st.title("Book Info Hub 📚")
 st.markdown("""
 Welcome to the Book Info Hub, your gateway to a richer reading experience. Our application offers two powerful tools designed to enhance how you interact with books and reading material: URL Summarization and the Book Chatbot.
 
+# Sidebar content
+st.sidebar.title("Sidebar")
+st.sidebar.write("This is the expanded sidebar.")
+
 **URL Summarization**
 \n In today's fast-paced world, sifting through vast amounts of information to find relevant insights can be daunting. Our URL Summarization tool is here to assist you. Simply provide a URL related to any book or literary content, and our tool will summarize the key points for you. Whether it’s a book review, an article about a book, or any related material, this feature distills the essence of the text, saving you time and helping you decide if the content is worth exploring further. Additionally, if you have specific questions about the content in the URL, our system is equipped to answer them directly, providing you with a more targeted understanding of the text.
 
