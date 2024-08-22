@@ -1,5 +1,6 @@
 import streamlit as st
 from utils import apply_background  # Import the function from utils.py
+from pages import page1, page2
 
 # Set the page configuration
 st.set_page_config(
@@ -18,9 +19,18 @@ st.markdown("""
 Welcome to the Book Info Hub, your gateway to a richer reading experience. Our application offers two powerful tools designed to enhance how you interact with books and reading material: URL Summarization and the Book Chatbot.
 """)
 
-# Sidebar content
-st.sidebar.title("Sidebar")
-st.sidebar.write("This is the expanded sidebar.")
+# Sidebar for navigation
+st.sidebar.title("Navigation")
+page = st.sidebar.selectbox("Go to", ["Home", "Page 1", "Page 2"])
+
+# Display the selected page with content
+if page == "Home":
+    st.title("Home")
+    st.write("Welcome to the Home Page!")
+elif page == "Page 1":
+    page1.app()  # Call the app function from page1
+elif page == "Page 2":
+    page2.app()  # Call the app function from page2
 
 # Main content in the sidebar
 st.sidebar.subheader("Tools Available")
