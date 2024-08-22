@@ -116,5 +116,5 @@ def app():
                     sources_list = sources.split("\n")
                     for source in sources_list:
                         st.write(source)
-    utils.custom_navbar()
-    app()
+utils.custom_navbar()
+app()
