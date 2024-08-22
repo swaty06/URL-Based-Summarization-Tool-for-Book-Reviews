@@ -17,7 +17,7 @@ page = st.sidebar.selectbox("Go to", ["Home", "Page 1", "Page 2"])
 # Function to dynamically load and execute page modules
 def load_page(page_name):
     try:
-        module_name = f"pages.{page_name.lower().replace(' ', '_')}"
+        module_name = f"Pages.{page_name.lower().replace(' ', '_')}"
         module = importlib.import_module(module_name)
         return module
     except ModuleNotFoundError:
