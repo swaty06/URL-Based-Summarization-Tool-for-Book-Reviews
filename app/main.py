@@ -23,14 +23,23 @@ Welcome to the Book Info Hub, your gateway to a richer reading experience. Our a
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox("Go to", ["Home", "Page 1", "Page 2"])
 
+# Function to dynamically load and execute page modules
+def load_page(page_name):
+    try:
+        module = importlib.import_module(f"pages.{page_name.lower()}")
+        return module
+    except ModuleNotFoundError:
+        st.error(f"Page {page_name} not found.")
+        return None
+
 # Display the selected page with content
 if page == "Home":
     st.title("Home")
     st.write("Welcome to the Home Page!")
-elif page == "Page 1":
-    page1.app()  # Call the app function from page1
-elif page == "Page 2":
-    page2.app()  # Call the app function from page2
+else:
+    page_module = load_page(page)
+    if page_module:
+        page_module.app()  # Call the app function from the module
 
 # Main content in the sidebar
 st.sidebar.subheader("Tools Available")
