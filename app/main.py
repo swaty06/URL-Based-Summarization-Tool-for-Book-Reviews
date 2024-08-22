@@ -27,9 +27,9 @@ page = st.sidebar.selectbox("Go to", ["Home", "Page 1", "Page 2"])
 if page == "Home":
     st.title("Home")
     st.write("Welcome to the Home Page!")
-elif page == "Page 1":
+elif page == "page 1":
     page1.app()  # Call the app function from page1
-elif page == "Page 2":
+elif page == "page 2":
     page2.app()  # Call the app function from page2
 
 # Main content in the sidebar
