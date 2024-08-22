@@ -10,6 +10,7 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from utils import apply_background 
 from dotenv import load_dotenv
+from st_pages import add_page_title
 
 # Load environment variables from .env file, particularly the OpenAI API key
 load_dotenv()
@@ -113,3 +114,4 @@ if query:
                 sources_list = sources.split("\n")
                 for source in sources_list:
                     st.write(source)
+utils.custom_navbar()
