@@ -62,6 +62,9 @@ def app():
     
     # File path for storing the FAISS index
     file_path = "vector_index.pkl"
+
+    # Initialize the vectorstore variable
+    vectorstore_openai = None
     
     # Placeholder for displaying status messages
     main_placeholder = st.empty()
@@ -71,33 +74,38 @@ def app():
     
     # Processing logic for URLs
     if process_url_clicked:
-        # load data
-        loader = UnstructuredURLLoader(urls=urls)
-        main_placeholder.text("Data Loading...Started...✅✅✅")
-        data = loader.load()
-        # split data
-        text_splitter = RecursiveCharacterTextSplitter(
-            separators=['\n\n', '\n', '.', ','],
-            chunk_size=chunk_size
-        )
-        main_placeholder.text("Text Splitter...Started...✅✅✅")
-        docs = text_splitter.split_documents(data)
-        # create embeddings and save it to FAISS index
-        embeddings = OpenAIEmbeddings()
-        vectorstore_openai = FAISS.from_documents(docs, embeddings)
-        main_placeholder.text("Embedding Vector Started Building...✅✅✅")
-        time.sleep(2)
-    
-        # Save the FAISS index to a pickle file
-        with open(file_path, "wb") as f:
-            vectorstore_openai.save_local("vectorstore")
+        try:
+            
+            # load data
+            loader = UnstructuredURLLoader(urls=urls)
+            main_placeholder.text("Data Loading...Started...✅✅✅")
+            data = loader.load()
+            # split data
+            text_splitter = RecursiveCharacterTextSplitter(
+                separators=['\n\n', '\n', '.', ','],
+                chunk_size=chunk_size
+            )
+            main_placeholder.text("Text Splitter...Started...✅✅✅")
+            docs = text_splitter.split_documents(data)
+            # create embeddings and save it to FAISS index
+            embeddings = OpenAIEmbeddings()
+            vectorstore_openai = FAISS.from_documents(docs, embeddings)
+            main_placeholder.text("Embedding Vector Started Building...✅✅✅")
+            time.sleep(2)
+        
+            # Save the FAISS index to a pickle file
+            with open(file_path, "wb") as f:
+                vectorstore_openai.save_local("vectorstore")
+        except Exception as e:
+            st.error(f"An error occurred during processing: {e}")
+        
     
     # Show a summary of processed URLs
-    if vectorstore_openai:
-        st.sidebar.subheader("Processed URLs Summary")
-        for url in urls:
-            if url:
-                st.sidebar.write(f"Processed: {url}")
+    #if vectorstore_openai:
+        #st.sidebar.subheader("Processed URLs Summary")
+        #for url in urls:
+            #if url:
+               # st.sidebar.write(f"Processed: {url}")
     
     # Text input for user query on the main page
     st.header("Ask a Question Related to the Links Provided")
