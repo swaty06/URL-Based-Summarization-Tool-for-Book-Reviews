@@ -15,4 +15,5 @@ tiktoken
 st_pages==0.5.0
 faiss-cpu
 nltk
+google-generativeai
 
