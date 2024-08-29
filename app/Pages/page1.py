@@ -123,7 +123,7 @@ def app():
                         sources_list = sources.split("\n")
                         for source in sources_list:
                             st.write(source)
-                 except Exception as e:
+            except Exception as e:
                      st.error(f"An error occurred while processing the query: {str(e)}")
         else:
             st.warning("Please process the URLs first by clicking the 'Process URLs' button.")
