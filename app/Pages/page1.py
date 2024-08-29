@@ -125,4 +125,4 @@ def app():
 custom_navbar()
 
 add_page_title(layout="wide")
-#app()
+app()
