@@ -21,4 +21,4 @@ google-generativeai
 sentence-transformers  # Example version that works well
 transformers==4.44.2  # Example version that works well
 tokenizers<0.20.0
-torch
+torch==2.01
