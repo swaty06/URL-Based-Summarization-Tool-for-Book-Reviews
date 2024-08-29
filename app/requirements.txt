@@ -19,5 +19,5 @@ nltk==3.8.1  # Example version for stability
 google-generativeai
 
 sentence-transformers==2.2.2  # Example version that works well
-transformers==4.30.0  # Example version that works well
+transformers==4.44.2  # Example version that works well
 tokenizers==0.20.0
