@@ -19,7 +19,7 @@ try:
     #instructor_embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-large")
     instructor_embeddings = SentenceTransformer('hkunlp/instructor-xl')
     
-     print("InstructorEmbedding initialized successfully!")
+    print("InstructorEmbedding initialized successfully!")
 except ImportError as e:
     print(f"ImportError: {e}")
     
