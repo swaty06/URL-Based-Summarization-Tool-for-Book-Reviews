@@ -120,3 +120,9 @@ def app():
                     sources_list = sources.split("\n")
                     for source in sources_list:
                         st.write(source)
+
+utils.set_custom_bg()
+utils.custom_navbar()
+utils.apply_background()
+add_page_title(layout="wide")
+app()
