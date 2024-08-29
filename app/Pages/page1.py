@@ -92,9 +92,7 @@ def app():
     # Show a summary of processed URLs
     if vectorstore_openai:
         st.sidebar.subheader("Processed URLs Summary")
-        for url in urls:
-            if url:
-                st.sidebar.write(f"Processed: {url}")
+      
     
     # Text input for user query on the main page
     st.header("Ask a Question Related to the Links Provided")
