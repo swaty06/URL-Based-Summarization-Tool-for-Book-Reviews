@@ -121,8 +121,8 @@ def app():
                     for source in sources_list:
                         st.write(source)
 
-utils.set_custom_bg()
-utils.custom_navbar()
-utils.apply_background()
+set_custom_bg()
+custom_navbar()
+apply_background()
 add_page_title(layout="wide")
 app()
