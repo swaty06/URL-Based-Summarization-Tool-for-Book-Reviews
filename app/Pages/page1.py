@@ -52,7 +52,12 @@ def app():
         for i in range(3)
     ]
     
-  
+    # Allow user to set model parameters
+    temperature = st.sidebar.slider("Model Temperature", min_value=0.0, max_value=1.0, value=0.7)
+    max_tokens = st.sidebar.slider("Max Tokens", min_value=100, max_value=1000, value=500)
+    
+    # Allow user to set chunk size for text splitting
+    chunk_size = st.sidebar.slider("Chunk Size for Text Splitting", min_value=500, max_value=2000, value=1000)
     
     # Move the Process URLs button to the sidebar
     process_url_clicked = st.sidebar.button("Process URLs")
@@ -64,7 +69,7 @@ def app():
     main_placeholder = st.empty()
     
     # Initialize OpenAI LLM with specific parameters
-    llm = OpenAI(model_name="gpt-3.5-turbo",temperature=0.9, max_tokens=500)
+    llm = OpenAI(temperature=temperature, max_tokens=max_tokens)
     
     # Processing logic for URLs
     if process_url_clicked:
@@ -75,7 +80,7 @@ def app():
         # split data
         text_splitter = RecursiveCharacterTextSplitter(
             separators=['\n\n', '\n', '.', ','],
-            chunk_size=1000
+            chunk_size=chunk_size
         )
         main_placeholder.text("Text Splitter...Started...✅✅✅")
         docs = text_splitter.split_documents(data)
@@ -89,8 +94,12 @@ def app():
         with open(file_path, "wb") as f:
             vectorstore_openai.save_local("vectorstore")
     
-   
-      
+    # Show a summary of processed URLs
+    if vectorstore_openai:
+        st.sidebar.subheader("Processed URLs Summary")
+        for url in urls:
+            if url:
+                st.sidebar.write(f"Processed: {url}")
     
     # Text input for user query on the main page
     st.header("Ask a Question Related to the Links Provided")
@@ -98,27 +107,21 @@ def app():
     
     # Handling the query input and processing
     if query:
-        if os.path.exists(file_path) and vectorstore_openai is not None:
-            try:
-                with open(file_path, "rb") as f:
-                    vectorstore = FAISS.load_local("vectorstore", OpenAIEmbeddings())
-                    chain = RetrievalQAWithSourcesChain.from_llm(llm=llm, retriever=vectorstore.as_retriever())
-                    result = chain({"question": query}, return_only_outputs=True)
-                    st.header("Answer")
-                    st.write(result["answer"])
-        
-                    # Display sources, if available
-                    sources = result.get("sources", "")
-                    if sources:
-                        st.subheader("Sources:")
-                        sources_list = sources.split("\n")
-                        for source in sources_list:
-                            st.write(source)
-            except Exception as e:
-                     st.error(f"An error occurred while processing the query: {str(e)}")
-        else:
-            st.warning("Please process the URLs first by clicking the 'Process URLs' button.")
-
+        if os.path.exists(file_path):
+            with open(file_path, "rb") as f:
+                vectorstore = FAISS.load_local("vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
+                chain = RetrievalQAWithSourcesChain.from_llm(llm=llm, retriever=vectorstore.as_retriever())
+                result = chain({"question": query}, return_only_outputs=True)
+                st.header("Answer")
+                st.write(result["answer"])
+    
+                # Display sources, if available
+                sources = result.get("sources", "")
+                if sources:
+                    st.subheader("Sources:")
+                    sources_list = sources.split("\n")
+                    for source in sources_list:
+                        st.write(source)
 
 custom_navbar()
 
