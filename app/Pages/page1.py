@@ -88,12 +88,7 @@ def app():
         with open(file_path, "wb") as f:
             vectorstore_openai.save_local("vectorstore")
     
-    # Show a summary of processed URLs
-    if vectorstore_openai:
-        st.sidebar.subheader("Processed URLs Summary")
-        for url in urls:
-            if url:
-                st.sidebar.write(f"Processed: {url}")
+   
     
     # Text input for user query on the main page
     st.header("Ask a Question Related to the Links Provided")
@@ -103,7 +98,7 @@ def app():
     if query:
         if os.path.exists(file_path):
             with open(file_path, "rb") as f:
-                vectorstore = FAISS.load_local("vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
+                vectorstore = FAISS.load_local("vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=False)
                 chain = RetrievalQAWithSourcesChain.from_llm(llm=llm, retriever=vectorstore.as_retriever())
                 result = chain({"question": query}, return_only_outputs=True)
                 st.header("Answer")
