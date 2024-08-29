@@ -8,7 +8,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import UnstructuredURLLoader
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
-from utils import apply_background,set_custom_bg
+from utils import apply_background,custom_navbar
 from dotenv import load_dotenv
 from st_pages import add_page_title
 from pathlib import Path
@@ -121,8 +121,8 @@ def app():
                     for source in sources_list:
                         st.write(source)
 
-set_custom_bg()
+
 custom_navbar()
-apply_background()
+
 add_page_title(layout="wide")
 app()
