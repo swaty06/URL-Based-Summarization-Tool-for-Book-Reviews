@@ -63,7 +63,9 @@ def app():
     main_placeholder = st.empty()
     
     # Initialize OpenAI LLM with specific parameters
-    llm = OpenAI(model="gpt-3.5-turbo",temperature=0.8, max_tokens=500)
+    #llm = OpenAI(model="gpt-3.5-turbo",temperature=0.8, max_tokens=500)
+    llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.8, max_tokens=500)
+    
     
     # Processing logic for URLs
     if process_url_clicked:
@@ -101,6 +103,7 @@ def app():
                 vectorstore = FAISS.load_local("vectorstore", OpenAIEmbeddings())
                 chain = RetrievalQAWithSourcesChain.from_llm(llm=llm, retriever=vectorstore.as_retriever())
                 result = chain({"question": query},return_only_outputs=True)
+                print("Answer:", result.get("answer"))
                 st.header("Answer")
                 st.write(result["answer"])
     
