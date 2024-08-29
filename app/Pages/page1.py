@@ -100,7 +100,7 @@ def app():
     # Handling the query input and processing
     if query:
         if os.path.exists(file_path):
-            with open(file_path, "rb") as f:
+            #with open(file_path, "rb") as f:
                 vectorstore = FAISS.load_local("vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
                 chain = RetrievalQAWithSourcesChain.from_llm(llm=llm, retriever=vectorstore.as_retriever())
                 result = chain({"question": query}, return_only_outputs=True)
