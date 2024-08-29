@@ -49,71 +49,66 @@ def app():
         st.sidebar.text_input(f"URL {i+1}", key=f"url_{i}", placeholder="Enter URL here") 
         for i in range(3)
     ]
-    
-   
-    
-    # Move the Process URLs button to the sidebar
-    process_url_clicked = st.sidebar.button("Process URLs")
-    
-    # File path for storing the FAISS index
-    file_path = "vector_index.pkl"
 
-    # Initialize the vectorstore variable
-    #vectorstore_openai = None
+# Move the Process URLs button to the sidebar
+process_url_clicked = st.sidebar.button("Process URLs")
+
+# File path for storing the FAISS index
+file_path = "vector_index.pkl"
+
+# Placeholder for displaying status messages
+main_placeholder = st.empty()
+
+# Initialize OpenAI LLM with specific parameters
+llm = OpenAI(temperature=0.9, max_tokens=500)
+
+# Processing logic for URLs
+if process_url_clicked:
+    # Load data
+    loader = UnstructuredURLLoader(urls=urls)
+    main_placeholder.text("Data Loading...Started...✅✅✅")
+    data = loader.load()
     
-    # Placeholder for displaying status messages
-    main_placeholder = st.empty()
+    # Split data
+    text_splitter = RecursiveCharacterTextSplitter(
+        separators=['\n\n', '\n', '.', ','],
+        chunk_size=1000
+    )
+    main_placeholder.text("Text Splitter...Started...✅✅✅")
+    docs = text_splitter.split_documents(data)
     
-    # Initialize OpenAI LLM with specific parameters
-    llm = OpenAI(temperature=0.9, max_tokens=500)
-    
-    # Processing logic for URLs
-    if process_url_clicked:
-         # load data
-        loader = UnstructuredURLLoader(urls=urls)
-        main_placeholder.text("Data Loading...Started...✅✅✅")
-        data = loader.load()
-        # split data
-        text_splitter = RecursiveCharacterTextSplitter(
-            separators=['\n\n', '\n', '.', ','],
-            chunk_size=1000
-        )
-        main_placeholder.text("Text Splitter...Started...✅✅✅")
-        docs = text_splitter.split_documents(data)
-        # create embeddings and save it to FAISS index
-        embeddings = OpenAIEmbeddings()
-        vectorstore_openai = FAISS.from_documents(docs, embeddings)
-        main_placeholder.text("Embedding Vector Started Building...✅✅✅")
-        time.sleep(2)
+    # Create embeddings and save them to FAISS index
+    embeddings = OpenAIEmbeddings()
+    vectorstore_openai = FAISS.from_documents(docs, embeddings)
+    main_placeholder.text("Embedding Vector Started Building...✅✅✅")
+    time.sleep(2)
 
     # Save the FAISS index to a pickle file
-    with open(file_path, "wb") as f:
-        #pickle.dump(vectorstore_openai, f)
-        vectorstore_openai.save_local("vectorstore")
-        
-    
-    
-    # Text input for user query on the main page
-    st.header("Ask a Question Related to the Links Provided")
-    query = st.text_input("Enter your question: ")
-    
-    # Handling the query input and processing
-    if query:
-        if os.path.exists(file_path):
-            #with open(file_path, "rb") as f:
-                vectorstore = FAISS.load_local("vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
-                chain = RetrievalQAWithSourcesChain.from_llm(llm=llm, retriever=vectorstore.as_retriever())
-                result = chain({"question": query}, return_only_outputs=True)
-                st.header("Answer")
-                st.write(result["answer"])
-    
-                # Display sources, if available
-                sources = result.get("sources", "")
-                if sources:
-                    st.subheader("Sources:")
-                    sources_list = sources.split("\n")
-                    for source in sources_list:
-                        st.write(source)
+    vectorstore_openai.save_local("vectorstore")
+    main_placeholder.text("Embedding Vector Saved Successfully...✅✅✅")
+
+# Text input for user query on the main page
+st.header("Ask a Question Related to the Links Provided")
+query = st.text_input("Enter your question: ")
+
+# Handling the query input and processing
+if query:
+    if os.path.exists("vectorstore"):
+        vectorstore = FAISS.load_local("vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
+        chain = RetrievalQAWithSourcesChain.from_llm(llm=llm, retriever=vectorstore.as_retriever())
+        result = chain({"question": query}, return_only_outputs=True)
+        st.header("Answer")
+        st.write(result["answer"])
+
+        # Display sources, if available
+        sources = result.get("sources", "")
+        if sources:
+            st.subheader("Sources:")
+            sources_list = sources.split("\n")
+            for source in sources_list:
+                st.write(source)
+    else:
+        st.write("Please process URLs first by clicking the 'Process URLs' button.") 
 custom_navbar()
 app()
 add_page_title(layout="wide")
