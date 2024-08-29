@@ -2,7 +2,7 @@
 
 
 import streamlit as st
-from .langchain_helper import get_qa_chain, create_vector_db
+from langchain_helper import get_qa_chain, create_vector_db
 from utils import apply_background,utils
 from st_pages import add_page_title
 from pathlib import Path
