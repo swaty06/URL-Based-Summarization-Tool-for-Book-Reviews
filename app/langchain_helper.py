@@ -6,6 +6,7 @@ from langchain.document_loaders.csv_loader import CSVLoader
 from langchain.embeddings import HuggingFaceInstructEmbeddings
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
+from sentence_transformers import SentenceTransformer
 import os
 
 from dotenv import load_dotenv
@@ -15,7 +16,9 @@ load_dotenv()  # take environment variables from .env (especially openai api key
 llm = GooglePalm(google_api_key=os.environ["GOOGLE_API_KEY"], temperature=0.1)
 # # Initialize instructor embeddings using the Hugging Face model
 try:
-    instructor_embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-large")
+    #instructor_embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-large")
+    instructor_embeddings = SentenceTransformer('hkunlp/instructor-xl')
+    
      print("InstructorEmbedding initialized successfully!")
 except ImportError as e:
     print(f"ImportError: {e}")
