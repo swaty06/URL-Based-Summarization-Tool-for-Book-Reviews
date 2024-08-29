@@ -12,6 +12,7 @@ from utils import apply_background,custom_navbar
 from dotenv import load_dotenv
 from st_pages import add_page_title
 from pathlib import Path
+from langchain.chat_models import ChatOpenAI
 
 root_path = Path(__file__).parent.parent
 media_path = root_path.joinpath("media")
