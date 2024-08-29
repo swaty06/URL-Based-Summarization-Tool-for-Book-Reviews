@@ -22,5 +22,6 @@ sentence-transformers==3.0.1  # Example version that works well
 transformers==4.44.2  # Example version that works well
 tokenizers<0.20.0
 torch
+InstructorEmbedding==1.0.1
 
 
