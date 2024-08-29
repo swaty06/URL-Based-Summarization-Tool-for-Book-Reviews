@@ -100,7 +100,7 @@ def app():
             with open(file_path, "rb") as f:
                 vectorstore = FAISS.load_local("vectorstore", OpenAIEmbeddings())
                 chain = RetrievalQAWithSourcesChain.from_llm(llm=llm, retriever=vectorstore.as_retriever())
-                result = chain({"question": query}, return_only_outputs=True)
+                result = chain({"question": query})
                 st.header("Answer")
                 st.write(result["answer"])
     
