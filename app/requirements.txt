@@ -20,4 +20,4 @@ google-generativeai
 
 sentence-transformers==2.2.2  # Example version that works well
 transformers==4.30.0  # Example version that works well
-tokenizers
+tokenizers==0.13.3
