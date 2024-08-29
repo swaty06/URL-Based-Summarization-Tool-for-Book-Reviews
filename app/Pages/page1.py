@@ -20,6 +20,8 @@ def app():
 
     # Load environment variables from .env file, particularly the OpenAI API key
     load_dotenv()
+    vectorstore_openai = None
+
     
     # Streamlit app setup
     st.title("Book Search Tool 📚")
@@ -105,21 +107,26 @@ def app():
     
     # Handling the query input and processing
     if query:
-        if os.path.exists(file_path):
-            with open(file_path, "rb") as f:
-                vectorstore = FAISS.load_local("vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
-                chain = RetrievalQAWithSourcesChain.from_llm(llm=llm, retriever=vectorstore.as_retriever())
-                result = chain({"question": query}, return_only_outputs=True)
-                st.header("Answer")
-                st.write(result["answer"])
-    
-                # Display sources, if available
-                sources = result.get("sources", "")
-                if sources:
-                    st.subheader("Sources:")
-                    sources_list = sources.split("\n")
-                    for source in sources_list:
-                        st.write(source)
+        if os.path.exists(file_path) and vectorstore_openai is not None:
+            try:
+                with open(file_path, "rb") as f:
+                    vectorstore = FAISS.load_local("vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
+                    chain = RetrievalQAWithSourcesChain.from_llm(llm=llm, retriever=vectorstore.as_retriever())
+                    result = chain({"question": query}, return_only_outputs=True)
+                    st.header("Answer")
+                    st.write(result["answer"])
+        
+                    # Display sources, if available
+                    sources = result.get("sources", "")
+                    if sources:
+                        st.subheader("Sources:")
+                        sources_list = sources.split("\n")
+                        for source in sources_list:
+                            st.write(source)
+                 except Exception as e:
+                     st.error(f"An error occurred while processing the query: {str(e)}")
+        else:
+            st.warning("Please process the URLs first by clicking the 'Process URLs' button.")
 
 
 custom_navbar()
