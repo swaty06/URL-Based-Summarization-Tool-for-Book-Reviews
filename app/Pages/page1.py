@@ -89,9 +89,7 @@ def app():
         with open(file_path, "wb") as f:
             vectorstore_openai.save_local("vectorstore")
     
-    # Show a summary of processed URLs
-    if vectorstore_openai:
-        st.sidebar.subheader("Processed URLs Summary")
+   
       
     
     # Text input for user query on the main page
