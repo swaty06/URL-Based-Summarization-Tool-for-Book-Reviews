@@ -14,7 +14,13 @@ load_dotenv()  # take environment variables from .env (especially openai api key
 # Create Google Palm LLM model
 llm = GooglePalm(google_api_key=os.environ["GOOGLE_API_KEY"], temperature=0.1)
 # # Initialize instructor embeddings using the Hugging Face model
-instructor_embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-large")
+try:
+    instructor_embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-large")
+     print("InstructorEmbedding initialized successfully!")
+except ImportError as e:
+    print(f"ImportError: {e}")
+    
+    
 vectordb_file_path = "faiss_index"
 
 def create_vector_db():
