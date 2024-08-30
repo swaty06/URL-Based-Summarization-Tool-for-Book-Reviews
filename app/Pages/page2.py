@@ -1,9 +1,6 @@
-
-
-
 import streamlit as st
 from langchain_helper import get_qa_chain, create_vector_db
-from utils import apply_background,utils
+from utils import apply_background,custom_navbar
 from st_pages import add_page_title
 from pathlib import Path
 
@@ -12,14 +9,6 @@ media_path = root_path.joinpath("media")
 
 def app():
 
-    # Set the page configuration
-    st.set_page_config(
-        page_title="Book Bot 🌱",
-        page_icon="📚",
-        layout="centered",
-        initial_sidebar_state="expanded",
-    )
-    
     # Add a custom CSS style for better visuals
     st.markdown(
         """
@@ -50,7 +39,7 @@ def app():
     Click the button below to initialize the knowledge base, then ask any question you have about books!
     """)
     # Apply the background image
-    apply_background(image_path="./app/media/book4.jpg")
+    apply_background(image_path="./media/book4.jpg")
     # Button to create a knowledge base
     btn = st.button("Create Knowledgebase 🛠️")
     
@@ -73,9 +62,9 @@ def app():
             st.header("Answer")
             st.write(response["result"])
 
-utils.set_custom_bg()
-utils.custom_navbar()
-utils.apply_background()
+
+custom_navbar()
+apply_background()
 add_page_title(layout="wide")
 app()
 
@@ -83,4 +72,3 @@ app()
             
         
         
-
