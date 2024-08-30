@@ -69,7 +69,7 @@ show_pages(
     [
         Page(str(root_path.joinpath("main.py")), "Home", "🏠"),
         Page(str(pages_path.joinpath("page1.py")), "Url Summarisor", ":books:"),
-        Page(str(pages_path.joinpath("page2.py")), "BookBot", "🌿"),
+      
        
     ]
 )
