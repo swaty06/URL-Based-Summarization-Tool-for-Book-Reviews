@@ -67,7 +67,7 @@ def app():
     main_placeholder = st.empty()
     
     # Initialize OpenAI LLM with specific parameters
-    llm = OpenAI(temperature=temperature, max_tokens=max_tokens)
+    llm = OpenAI(temperature=0.9, max_tokens=500)
     
     # Processing logic for URLs
     if process_url_clicked:
@@ -78,7 +78,7 @@ def app():
         # split data
         text_splitter = RecursiveCharacterTextSplitter(
             separators=['\n\n', '\n', '.', ','],
-            chunk_size=chunk_size
+            chunk_size=1000
         )
         main_placeholder.text("Text Splitter...Started...✅✅✅")
         docs = text_splitter.split_documents(data)
@@ -92,12 +92,7 @@ def app():
         with open(file_path, "wb") as f:
             vectorstore_openai.save_local("vectorstore")
     
-    # Show a summary of processed URLs
-    if vectorstore_openai:
-        st.sidebar.subheader("Processed URLs Summary")
-        for url in urls:
-            if url:
-                st.sidebar.write(f"Processed: {url}")
+  
     
     # Text input for user query on the main page
     st.header("Ask a Question Related to the Links Provided")
