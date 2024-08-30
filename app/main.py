@@ -19,6 +19,9 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+ 
+    # Apply the background image
+apply_background(image_path="./app/media/book4.jpg")
 
 # Sidebar for navigation
 st.sidebar.title("Navigation")
