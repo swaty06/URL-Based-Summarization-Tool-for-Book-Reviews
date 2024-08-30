@@ -2,7 +2,7 @@ import os
 import streamlit as st
 import pickle
 import time
-from langchain import OpenAI
+from langchain import OpenAI,ChatOpenAI
 from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import UnstructuredURLLoader
@@ -59,7 +59,7 @@ def app():
     main_placeholder = st.empty()
     
     # Initialize OpenAI LLM with specific parameters
-    llm = OpenAI(temperature=0.9, max_tokens=500)
+    llm = ChatOpenAI(temperature=0.9, max_tokens=500)
     
     # Processing logic for URLs
     if process_url_clicked:
