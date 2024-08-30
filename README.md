@@ -33,3 +33,9 @@ This tool leverages large language models (LLMs) to provide concise summaries an
 ## Try It Out
 
 Check out the live version of the project here: [URL Summarizer for Book Reviews](https://url-based-summarization-tool-for-book-reviews-hzoozdiwdtp8mgqv.streamlit.app/Url%20Summarisor)
+
+## How to Use
+
+1. Visit the [live application](https://url-based-summarization-tool-for-book-reviews-hzoozdiwdtp8mgqv.streamlit.app/Url%20Summarisor).
+2. Paste one to three URLs into the input fields.
+3. Click "Summarize" to get your results.
