@@ -6,7 +6,6 @@ from langchain.document_loaders.csv_loader import CSVLoader
 from langchain.embeddings import HuggingFaceInstructEmbeddings
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
-from sentence_transformers import SentenceTransformer
 import os
 
 from dotenv import load_dotenv
@@ -15,15 +14,7 @@ load_dotenv()  # take environment variables from .env (especially openai api key
 # Create Google Palm LLM model
 llm = GooglePalm(google_api_key=os.environ["GOOGLE_API_KEY"], temperature=0.1)
 # # Initialize instructor embeddings using the Hugging Face model
-try:
-    #instructor_embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-large")
-    instructor_embeddings = SentenceTransformer('hkunlp/instructor-xl')
-    
-    print("InstructorEmbedding initialized successfully!")
-except ImportError as e:
-    print(f"ImportError: {e}")
-    
-    
+instructor_embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-large")
 vectordb_file_path = "faiss_index"
 
 def create_vector_db():
@@ -70,5 +61,4 @@ def get_qa_chain():
 if __name__ == "__main__":
     create_vector_db()
     chain = get_qa_chain()
-    result = chain({"query": "Do you have javascript course?"})
     print(chain("Do you have javascript course?"))
