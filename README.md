@@ -30,3 +30,5 @@ This tool leverages large language models (LLMs) to provide concise summaries an
 - **Multi-URL Expansion:** Allow users to input more than three URLs to create even more comprehensive summaries.
 - **Enhanced Q&A:** Improve the accuracy and depth of the Q&A feature by fine-tuning the model on a wider range of book review datasets.
 - **Browser Extension:** Develop a browser extension that allows users to summarize reviews directly from their web browser without needing to copy and paste URLs.
+
+- URL Summarizer for Book Reviews
