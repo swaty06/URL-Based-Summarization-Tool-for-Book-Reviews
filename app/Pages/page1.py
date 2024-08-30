@@ -49,15 +49,7 @@ def app():
         st.sidebar.text_input(f"URL {i+1}", key=f"url_{i}", placeholder="Enter URL here") 
         for i in range(3)
     ]
-    
-    # Allow user to set model parameters
-    temperature = st.sidebar.slider("Model Temperature", min_value=0.0, max_value=1.0, value=0.7)
-    max_tokens = st.sidebar.slider("Max Tokens", min_value=100, max_value=1000, value=500)
-    
-    # Allow user to set chunk size for text splitting
-    chunk_size = st.sidebar.slider("Chunk Size for Text Splitting", min_value=500, max_value=2000, value=1000)
-    
-    # Move the Process URLs button to the sidebar
+       # Move the Process URLs button to the sidebar
     process_url_clicked = st.sidebar.button("Process URLs")
     
     # File path for storing the FAISS index
