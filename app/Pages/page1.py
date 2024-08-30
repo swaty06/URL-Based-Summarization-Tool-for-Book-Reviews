@@ -8,7 +8,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import UnstructuredURLLoader
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
-from utils import apply_background
+from utils import apply_background,custom_navbar
 from dotenv import load_dotenv
 from st_pages import add_page_title
 from pathlib import Path
