@@ -30,8 +30,9 @@ apply_background(image_path="./app/media/book4.jpg")
 # Main content (previously in the sidebar)
 st.subheader("Tools Available")
 st.write("""
-1. **URL Summarization:** Provide a URL related to any book or literary content, and our tool will summarize the key points for you.
-2. **Book Chatbot:** Ask any book-related questions, and get insightful responses from our AI-powered assistant.
+ **URL Summarization:** 
+ Welcome to the URL Summarizer! Paste up to three URLs, and this tool will quickly generate concise summaries of the content using advanced language models. Perfect for when you want to grasp the key points of articles, reviews, or any online content without reading through lengthy texts. Ask specific questions or get an overall summary in seconds!.Provide a URL related to any book or literary content, and our tool will summarize the key points for you.
+ 
 """)
 # Add links to book resources or related pages
 st.markdown("""
