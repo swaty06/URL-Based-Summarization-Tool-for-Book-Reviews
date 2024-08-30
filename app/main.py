@@ -75,3 +75,4 @@ show_pages(
 )
 
 add_page_title(layout="wide")
+apply_background()
