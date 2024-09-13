@@ -91,23 +91,33 @@ def app():
     st.header("Ask a Question Related to the Links Provided")
     query = st.text_input("Enter your question: ")
     
-    # Handling the query input and processing
-    if query:
-        if os.path.exists(file_path):
-            with open(file_path, "rb") as f:
-                vectorstore = FAISS.load_local("vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
-                chain = RetrievalQAWithSourcesChain.from_llm(llm=llm, retriever=vectorstore.as_retriever())
-                result = chain({"question": query}, return_only_outputs=True)
+  if query:
+    if os.path.exists(file_path):
+        with open(file_path, "rb") as f:
+            # Load the FAISS vector store
+            vectorstore = FAISS.load_local("vectorstore", OpenAIEmbeddings(), allow_dangerous_deserialization=True)
+            
+            # Create a RetrievalQAWithSourcesChain using the vector store
+            chain = RetrievalQAWithSourcesChain.from_llm(llm=llm, retriever=vectorstore.as_retriever())
+            
+            # Get the result from the chain
+            result = chain({"question": query}, return_only_outputs=True)
+            
+            # Access the answer text and display it
+            if "answer" in result:
                 st.header("Answer")
-                st.write(result["answer"])
+                st.write(result["answer"])  # Extracting the 'answer' field from the OpenAIObject
+            else:
+                st.error("No answer could be generated.")
     
-                # Display sources, if available
-                sources = result.get("sources", "")
-                if sources:
-                    st.subheader("Sources:")
-                    sources_list = sources.split("\n")
-                    for source in sources_list:
-                        st.write(source)
+            # Display sources, if available
+            if "sources" in result:
+                sources = result["sources"]
+                st.subheader("Sources:")
+                sources_list = sources.split("\n")
+                for source in sources_list:
+                    st.write(source)
+
 custom_navbar()
 app()
 add_page_title(layout="wide")
