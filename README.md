@@ -32,7 +32,7 @@ This tool leverages large language models (LLMs) to provide concise summaries an
 - **Browser Extension:** Develop a browser extension that allows users to summarize reviews directly from their web browser without needing to copy and paste URLs.
 ## Try It Out
 
-Check out the live version of the project here: [URL Summarizer for Book Reviews](https://url-based-summarization-tool-for-book-reviews-hzoozdiwdtp8mgqv.streamlit.app/Url%20Summarisor)
+Check out the live version of the project here: [URL Summarizer for Book Reviews](https://url-based-summarization-tool-for-book-reviews-56zxhrfl8bfiamab.streamlit.app/Url%20Summarisor)
 
 ## How to Use
 
